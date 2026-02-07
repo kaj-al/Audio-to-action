@@ -27,8 +27,24 @@ if audio:
     with open("transcription.txt","a",encoding="utf-8") as f:
         f.write(f"{timestamp} - {result["text"]}\n")
     st.subheader("Voice notes history")
-    for note in reversed(st.session_state.history):
-        st.write(note)
+    for text in reversed(st.session_state.history):
+        st.write(text)
 
+    def intent(text):
+        text = text.lower()
+        if "remind" in text or "reminder" in text:
+            return "Reminder"
+        elif "buy" in text or "purchase" in text:
+            return "Task"
+        elif "open" in text or "search" in text:
+            return "Open Tab"
+        elif "idea" in text or "note" in text:
+            return "Idea"
+        else:
+            return "General Note"
+
+    intent = intent(text)
+    st.subheader("Detected intent")
+    st.write(intent)
 
 
