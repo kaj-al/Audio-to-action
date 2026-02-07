@@ -9,6 +9,7 @@ API_KEY = os.getenv("API_KEY")
 API_URL = os.getenv("API_URL")
 
 def intent(text):
+    print("triggered")
     prompt = f"""You are an intelligent assistant that converts voice notes into structured actions.
     Possible Intent Ctegories:
     -Reminder
@@ -20,6 +21,7 @@ def intent(text):
     -General Information
     -Unkonwn
     Return only valid JSON.
+    
     Output Format:{{
     "intent":"",
     "action_type":"",
@@ -33,20 +35,20 @@ def intent(text):
     User Input:{text}"""
     headers = {
         "Content-Type":"application/json",
-        "Authorization":f"Bearer{API_KEY}"
+        "Authorization":f"Bearer {API_KEY}"
     }
     payload = {
-        "model":"gpt-4o-mini",
+        "model":"openai/gpt-4o-mini",
         "messages":[{"role":"user","content":prompt}],
         "temperature":0
     }
-    response = requests.post(API_URL,headers=headers,json=payload)
     try:
+        response = requests.post(API_URL,headers=headers,json=payload)
         result = response.json()
-        print(result)
-        if "choices" in result:
-            return result["choices"][0]["message"]["content"]
-    except:
+        content = result["choices"][0]["message"]["content"]
+        return content
+    except Exception as e:
+        print("error:{e}")
         return "Intent not detected"
     
 
