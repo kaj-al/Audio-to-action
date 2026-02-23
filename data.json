@@ -1,0 +1,17 @@
+{
+    "tasks": [
+        {
+            "intent": "Reminder",
+            "action_type": "remind",
+            "task": "college assignment",
+            "date": "",
+            "time": "",
+            "priority": "",
+            "additional_details": ""
+        }
+    ],
+    "notes": [],
+    "events": [],
+    "shopping": [],
+    "reminder": []
+}

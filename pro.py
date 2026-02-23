@@ -68,10 +68,8 @@ with col3:
     st.markdown("### Notes / Shopping")
     for n in data["notes"]:
         st.write(f"• {n.get('task')}")
-    # for s in data["shopping"]:
-    #     st.write(f"• {s.get('task')}")
 
-# historys
+# history
 if st.session_state.history:
     st.subheader("History")
     for item in reversed(st.session_state.history):

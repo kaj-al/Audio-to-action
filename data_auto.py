@@ -3,10 +3,10 @@ import os
 
 DATA_FILE = "data.json"
 
-# ---------------- DATA STORAGE ----------------
+#  DATA STORAGE 
 def load_data():
     if not os.path.exists(DATA_FILE):
-        return {"tasks": [], "notes": [], "events": []}
+        return {"tasks": [], "notes": [], "events": [], "shopping": [], "reminder": []}
     with open(DATA_FILE, "r") as f:
         return json.load(f)
 
@@ -17,23 +17,31 @@ def save_data(data):
 data = load_data()
 
 def automate(intent_data):
-    if not isinstance(intent_data,dict):
+    if not isinstance(intent_data, dict):
         return
-    intent = intent_data.get("intent")
 
-    if intent in ["Reminder", "Task Creation"]:
-        data["tasks"].append(intent_data)
+    intent = intent_data.get("intent", "Unknown")
 
-    elif intent == "Event Scheduling":
-        data["events"].append(intent_data)
+    # Normalize intent string for comparisons
+    intent_norm = intent.strip().lower() if isinstance(intent, str) else "unknown"
 
-    elif intent == "Note Saving":
-        data["notes"].append(intent_data)
-    
-    elif intent == "Shopping":
-        data["shopping"].append(intent_data)
-    
-    elif intent == "Reminder":
-        data["reminder"].append(intent_data)
+    if intent_norm in ("reminder", "task creation", "task"):
+        data.setdefault("tasks", []).append(intent_data)
+
+    elif intent_norm in ("event scheduling", "event"):
+        data.setdefault("events", []).append(intent_data)
+
+    elif intent_norm in ("note saving", "note"):
+        data.setdefault("notes", []).append(intent_data)
+
+    elif "shop" in intent_norm or intent_norm == "shopping list" or intent_norm == "shopping":
+        data.setdefault("shopping", []).append(intent_data)
+
+    elif intent_norm == "reminder":
+        data.setdefault("reminder", []).append(intent_data)
+
+    else:
+        # Unknown intents go into notes for later review
+        data.setdefault("notes", []).append(intent_data)
 
     save_data(data)
