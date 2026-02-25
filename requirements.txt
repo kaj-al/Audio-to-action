@@ -1,0 +1,12 @@
+streamlit 
+json
+os
+pydub
+whisper
+datetime
+SpeechRecognition
+pyttsx
+openai
+openrouter
+requests
+python-dotenv

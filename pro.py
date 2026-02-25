@@ -1,7 +1,6 @@
 import streamlit as st 
 from pydub import AudioSegment
 import whisper
-import json
 from intent_detection import intent
 from datetime import datetime
 from data_auto import automate,data
