@@ -10,3 +10,5 @@ openai
 openrouter
 requests
 python-dotenv
+webbrowser
+datetime
